@@ -13,7 +13,14 @@ namespace Aodag.Samples.Addressbook.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View();
+            var people = Enumerable.Range(0, 10)
+                .Select(i => new Models.Person() {
+                    FirstName = string.Format("Person{0}", i),
+                    LastName = "Last",
+                    Email = string.Format("person{0}@example.com", i)
+                })
+                .ToArray();
+            return View(people);
         }
     }
 }

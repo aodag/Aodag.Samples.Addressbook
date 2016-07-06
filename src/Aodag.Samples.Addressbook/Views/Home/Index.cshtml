@@ -5,3 +5,17 @@
     // ViewBag.Title = "Index Page";
 }
 <h1>Hello</h1>
+
+<table>
+    <tr>
+        <th>FullName</th>
+        <th>Email</th>
+    </tr>
+@foreach (var person in Model)
+{
+    <tr>
+        <td>@person.FullName</td>
+        <td>@person.Email</td>
+    </tr>
+}
+</table>
