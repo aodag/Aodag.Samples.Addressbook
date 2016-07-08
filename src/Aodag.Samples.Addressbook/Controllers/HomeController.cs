@@ -17,7 +17,8 @@ namespace Aodag.Samples.Addressbook.Controllers
                 .Select(i => new Models.Person() {
                     FirstName = string.Format("Person{0}", i),
                     LastName = "Last",
-                    Email = string.Format("person{0}@example.com", i)
+                    Email = string.Format("person{0}@example.com", i),
+                    Id = i,
                 })
                 .ToArray();
             return View(people);
@@ -26,6 +27,17 @@ namespace Aodag.Samples.Addressbook.Controllers
         public IActionResult New()
         {
             return View();
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var person = new Models.Person() {
+                FirstName = "Edit First Name",
+                LastName = "Edit Last Name",
+                Id = id,
+                Email = "edit@example.com",
+            };
+            return View(person);
         }
     }
 }

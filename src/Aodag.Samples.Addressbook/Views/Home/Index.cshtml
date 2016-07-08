@@ -15,7 +15,9 @@
 @foreach (var person in Model)
 {
     <tr>
-        <td>@person.FullName</td>
+        <td>
+            <a asp-action="edit" asp-route-id="@person.Id">@person.FullName</a>
+        </td>
         <td>@person.Email</td>
     </tr>
 }
