@@ -10,17 +10,22 @@ namespace Aodag.Samples.Addressbook.Controllers
 {
     public class HomeController : Controller
     {
+        Data.ApplicationDbContext DbContext
+        {
+            get;
+            set;
+        }
+
+        public HomeController([FromServices]Data.ApplicationDbContext dbContext)
+            :base()
+        {
+            DbContext = dbContext;
+        }
+
         // GET: /<controller>/
         public IActionResult Index()
         {
-            var people = Enumerable.Range(0, 10)
-                .Select(i => new Models.Person() {
-                    FirstName = string.Format("Person{0}", i),
-                    LastName = "Last",
-                    Email = string.Format("person{0}@example.com", i),
-                    Id = i,
-                })
-                .ToArray();
+            var people = DbContext.People.ToArray();
             return View(people);
         }
 
@@ -29,15 +34,52 @@ namespace Aodag.Samples.Addressbook.Controllers
             return View();
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Create([FromForm]string firstName, [FromForm]string lastName, [FromForm]string email)
         {
             var person = new Models.Person() {
-                FirstName = "Edit First Name",
-                LastName = "Edit Last Name",
-                Id = id,
-                Email = "edit@example.com",
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
             };
+            DbContext.Add(person);
+            DbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var person = DbContext.People.FirstOrDefault(p => p.Id == id);
+            if (person == null)
+            {
+                return NotFound();
+            }
             return View(person);
+        }
+
+        public IActionResult Update(int id, [FromForm]string firstName, [FromForm]string lastName, [FromForm]string email)
+        {
+            var person = DbContext.People.FirstOrDefault(p => p.Id == id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+            person.FirstName = firstName;
+            person.LastName = lastName;
+            person.Email = email;
+            DbContext.SaveChanges();
+            return RedirectToAction("Index");            
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var person = DbContext.People.FirstOrDefault(p => p.Id == id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+            DbContext.Remove(person);
+            DbContext.SaveChanges();
+            return RedirectToAction("Index");                        
         }
     }
 }
