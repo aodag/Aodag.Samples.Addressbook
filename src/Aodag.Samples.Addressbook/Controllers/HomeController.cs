@@ -22,5 +22,10 @@ namespace Aodag.Samples.Addressbook.Controllers
                 .ToArray();
             return View(people);
         }
+
+        public IActionResult New()
+        {
+            return View();
+        }
     }
 }
