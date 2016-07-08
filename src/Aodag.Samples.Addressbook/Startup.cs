@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace Aodag.Samples.Addressbook
 {
@@ -17,6 +18,9 @@ namespace Aodag.Samples.Addressbook
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddDbContext<Data.ApplicationDbContext>(options => {
+                options.UseSqlite("DataSource = addressbook.sqlite");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
