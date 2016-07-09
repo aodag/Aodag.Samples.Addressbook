@@ -22,6 +22,7 @@ namespace Aodag.Samples.Addressbook.Controllers
             DbContext = dbContext;
         }
 
+        [HttpGet]
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -29,11 +30,13 @@ namespace Aodag.Samples.Addressbook.Controllers
             return View(people);
         }
 
+        [HttpGet]
         public IActionResult New()
         {
             return View();
         }
 
+        [HttpPost]
         public IActionResult Create([FromForm]string firstName, [FromForm]string lastName, [FromForm]string email)
         {
             var person = new Models.Person() {
@@ -46,6 +49,7 @@ namespace Aodag.Samples.Addressbook.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             var person = DbContext.People.FirstOrDefault(p => p.Id == id);
@@ -56,6 +60,7 @@ namespace Aodag.Samples.Addressbook.Controllers
             return View(person);
         }
 
+        [HttpPost]
         public IActionResult Update(int id, [FromForm]string firstName, [FromForm]string lastName, [FromForm]string email)
         {
             var person = DbContext.People.FirstOrDefault(p => p.Id == id);
@@ -70,6 +75,7 @@ namespace Aodag.Samples.Addressbook.Controllers
             return RedirectToAction("Index");            
         }
 
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             var person = DbContext.People.FirstOrDefault(p => p.Id == id);
