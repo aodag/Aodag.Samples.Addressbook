@@ -5,4 +5,7 @@ build:
             name: restore
             code: |
                 dotnet restore
-        
+        - script:
+            name: test
+            code: |
+                dotnet test tests/*
