@@ -1,6 +1,10 @@
 box: microsoft/dotnet:1.0.0-preview2-sdk
 build:
     steps:
+        -script:
+            name: uname
+            code: |
+                uname -a
         - script:
             name: restore
             code: |
