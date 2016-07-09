@@ -10,7 +10,7 @@ namespace Aodag.Samples.Addressbook.Controllers
 {
     public class HomeController : Controller
     {
-        Data.ApplicationDbContext DbContext
+        public Data.ApplicationDbContext DbContext
         {
             get;
             set;
