@@ -8,7 +8,7 @@ using Aodag.Samples.Addressbook.Data;
 namespace Aodag.Samples.Addressbook.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160708230419_FirstModels")]
+    [Migration("20160730112217_FirstModels")]
     partial class FirstModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,11 +21,14 @@ namespace Aodag.Samples.Addressbook.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
                     b.HasKey("Id");
 

@@ -11,12 +11,14 @@ namespace Aodag.Samples.Addressbook.Models
             set;
         }
         
+        [Required]
         public string FirstName
         {
             get;
             set;
         }
 
+        [Required]
         public string LastName
         {
             get;
@@ -29,7 +31,7 @@ namespace Aodag.Samples.Addressbook.Models
             get {return FirstName + " " + LastName;}
         }
 
-        [EmailAddress]
+        [EmailAddress,Required]
         public string Email
         {
             get;
