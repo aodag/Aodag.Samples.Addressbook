@@ -29,7 +29,10 @@ namespace Aodag.Samples.Addressbook.Test.Controllers
         public void Create()
         {
             var target = NewTarget();
-            target.Create("test", "target", "testing@example.com");
+            target.Create(new Models.Person() {
+                FirstName="test",
+                LastName="target",
+                Email="testing@example.com"});
             var results = target.DbContext.People.ToArray();
             Assert.NotEmpty(results);
             Assert.Equal(results[0].FirstName, "test");
