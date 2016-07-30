@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,13 +38,12 @@ namespace Aodag.Samples.Addressbook.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromForm]string firstName, [FromForm]string lastName, [FromForm]string email)
+        public IActionResult Create([FromForm]Models.Person person)
         {
-            var person = new Models.Person() {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-            };
+            if (!ModelState.IsValid)
+            {
+                return View("New", person);
+            }
             DbContext.Add(person);
             DbContext.SaveChanges();
             return RedirectToAction("Index");
@@ -61,16 +61,21 @@ namespace Aodag.Samples.Addressbook.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(int id, [FromForm]string firstName, [FromForm]string lastName, [FromForm]string email)
+        public IActionResult Update(int id, [FromForm]Models.Person data)
         {
+            if (!ModelState.IsValid)
+            {
+                data.Id = id;
+                return View("Edit", data);
+            }
             var person = DbContext.People.FirstOrDefault(p => p.Id == id);
             if (person == null)
             {
                 return NotFound();
             }
-            person.FirstName = firstName;
-            person.LastName = lastName;
-            person.Email = email;
+            person.FirstName = data.FirstName;
+            person.LastName = data.LastName;
+            person.Email = data.Email;
             DbContext.SaveChanges();
             return RedirectToAction("Index");            
         }
