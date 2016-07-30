@@ -38,7 +38,7 @@ namespace Aodag.Samples.Addressbook.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromForm]Models.Person person)
+        public IActionResult Create([Bind("FirstName,LastName,Email")]Models.Person person)
         {
             if (!ModelState.IsValid)
             {
@@ -61,11 +61,10 @@ namespace Aodag.Samples.Addressbook.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(int id, [FromForm]Models.Person data)
+        public IActionResult Update(int id, [Bind("Id,FirstName,LastName,Email")]Models.Person data)
         {
             if (!ModelState.IsValid)
             {
-                data.Id = id;
                 return View("Edit", data);
             }
             var person = DbContext.People.FirstOrDefault(p => p.Id == id);
